@@ -119,8 +119,8 @@ func (ip IPAddr) String() string {
 }
 
 func Walk(t *tree.Tree, ch chan int) {
+	defer close(ch)
 	walk(t, ch)
-	close(ch)
 }
 
 func walk(t *tree.Tree, ch chan int) {
