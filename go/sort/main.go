@@ -21,6 +21,20 @@ func main() {
 	fmt.Println("insertionSort")
 	fmt.Printf("before: %v\n", arr)
 	fmt.Printf("after: %v\n", insertionSort(arr))
+
+	fmt.Println("")
+
+	arr = []int{1, 4, 5, 6, 2, 11, 55, 3232, 5}
+	fmt.Println("quickSort")
+	fmt.Printf("before: %v\n", arr)
+	fmt.Printf("after: %v\n", quickSort(arr))
+
+	fmt.Println("")
+
+	arr = []int{1, 4, 5, 6, 2, 11, 55, 3232, 5}
+	fmt.Println("mergeSort")
+	fmt.Printf("before: %v\n", arr)
+	fmt.Printf("after: %v\n", mergeSort(arr))
 }
 
 func bubbleSort(arr []int) []int {
@@ -67,4 +81,63 @@ func insertionSort(arr []int) []int {
 		arr[i+1] = key
 	}
 	return arr
+}
+
+func quickSort(arr []int) []int {
+	var left, right []int
+	if len(arr) > 1 {
+		x := arr[0]
+		for _, a := range arr[1:] {
+			if a < x {
+				left = append(left, a)
+			} else {
+				right = append(right, a)
+			}
+		}
+		left = quickSort(left)
+		right = quickSort(right)
+		arr = append(append(left, x), right...)
+	}
+
+	return arr
+}
+
+func mergeSort(arr []int) []int {
+	if len(arr) < 2 {
+		return arr
+	}
+
+	first := mergeSort(arr[len(arr)/2:])
+	second := mergeSort(arr[:len(arr)/2])
+
+	return merge(first, second)
+}
+
+func merge(a, b []int) []int {
+	final := []int{}
+
+	i := 0
+	j := 0
+
+	for i < len(a) && j < len(b) {
+		if a[i] < b[j] {
+			final = append(final, a[i])
+			i++
+		} else {
+			final = append(final, b[j])
+			j++
+		}
+	}
+
+	for i < len(a) {
+		final = append(final, a[i])
+		i++
+	}
+
+	for j < len(b) {
+		final = append(final, b[j])
+		j++
+	}
+
+	return final
 }
