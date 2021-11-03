@@ -35,6 +35,13 @@ func main() {
 	fmt.Println("mergeSort")
 	fmt.Printf("before: %v\n", arr)
 	fmt.Printf("after: %v\n", mergeSort(arr))
+
+	fmt.Println("")
+
+	arr = []int{1, 4, 5, 6, 2, 11, 55, 3232, 5}
+	fmt.Println("shellSort")
+	fmt.Printf("before: %v\n", arr)
+	fmt.Printf("after: %v\n", shellSort(arr))
 }
 
 func bubbleSort(arr []int) []int {
@@ -140,4 +147,34 @@ func merge(a, b []int) []int {
 	}
 
 	return final
+}
+
+func shellSort(arr []int) []int {
+	h := 4
+
+	for h > 1 {
+		for i := 0; i < h; i++ {
+			b := make([]int, len(arr)/h+1)
+			cnt := 0
+
+			for j := 0; j < len(arr)/h+1; j++ {
+				if i+h*j < len(arr) {
+					fmt.Println(arr[i+h*j])
+					b[j] = arr[i+h*j]
+					cnt++
+				}
+			}
+			c := insertionSort(b[:cnt])
+
+			for j := 0; j < cnt; j++ {
+				if i+h*j < len(arr) {
+					arr[i+h*j] = c[j]
+				}
+			}
+		}
+		h /= 2
+	}
+
+	arr = insertionSort(arr)
+	return arr
 }
