@@ -42,6 +42,14 @@ func main() {
 	fmt.Println("shellSort")
 	fmt.Printf("before: %v\n", arr)
 	fmt.Printf("after: %v\n", shellSort(arr))
+
+	fmt.Println("")
+
+	arr = []int{1, 4, 5, 6, 2, 11, 55, 3232, 5}
+	fmt.Println("heapSort")
+	fmt.Printf("before: %v\n", arr)
+	fmt.Printf("buildHeap: %v\n", buildHeap(arr))
+	fmt.Printf("after: %v\n", heapSort(arr))
 }
 
 func bubbleSort(arr []int) []int {
@@ -159,7 +167,6 @@ func shellSort(arr []int) []int {
 
 			for j := 0; j < len(arr)/h+1; j++ {
 				if i+h*j < len(arr) {
-					fmt.Println(arr[i+h*j])
 					b[j] = arr[i+h*j]
 					cnt++
 				}
@@ -177,4 +184,70 @@ func shellSort(arr []int) []int {
 
 	arr = insertionSort(arr)
 	return arr
+}
+
+func buildHeap(arr []int) []int {
+	last := len(arr) - 1
+	parent := last
+
+	for parent >= 0 {
+		children := [2]int{parent * 2, parent*2 + 1}
+
+		// no children
+		if children[0] > last {
+			parent--
+			continue
+		}
+
+		// only children[0]
+		if children[1] > last {
+			if arr[children[0]] > arr[parent] {
+				tmp := arr[children[0]]
+				arr[children[0]] = arr[parent]
+				arr[parent] = tmp
+
+				parent = children[0]
+			}
+			parent--
+			continue
+		}
+
+		// both exists children 0, 1
+		if arr[children[0]] > arr[children[1]] {
+			if arr[children[0]] > arr[parent] {
+				tmp := arr[children[0]]
+				arr[children[0]] = arr[parent]
+				arr[parent] = tmp
+
+				parent = children[0]
+				continue
+			}
+		} else {
+			if arr[children[1]] > arr[parent] {
+				tmp := arr[children[1]]
+				arr[children[1]] = arr[parent]
+				arr[parent] = tmp
+
+				parent = children[1]
+				continue
+			}
+		}
+		parent--
+	}
+
+	return arr
+}
+
+func heapSort(arr []int) []int {
+	resp := []int{}
+	last := len(arr)
+
+	for ; last > 0; last-- {
+		arr := buildHeap(arr[:last])
+		resp = append([]int{arr[0]}, resp...)
+		fmt.Println("resp:", resp)
+		arr[0] = arr[last-1]
+	}
+
+	return resp
 }
