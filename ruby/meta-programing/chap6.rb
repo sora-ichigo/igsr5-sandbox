@@ -48,20 +48,44 @@ p a.my_attr
 
 # 4
 
-class Class
-  def attr_checked(attribute, &validation)
-    define_method "#{attribute}" do
-      instance_variable_get "@#{attribute}"
-    end
+# class Class
+#   def attr_checked(attribute, &validation)
+#     define_method "#{attribute}" do
+#       instance_variable_get "@#{attribute}"
+#     end
+# 
+#     define_method "#{attribute}=" do |value|
+#       raise "Invalid attribute Error: #{value}" unless validation.call(value)
+#       instance_variable_set("@#{attribute}", value)
+#     end
+#   end
+# end
 
-    define_method "#{attribute}=" do |value|
-      raise "Invalid attribute Error: #{value}" unless validation.call(value)
-      instance_variable_set("@#{attribute}", value)
+# 5
+
+module CheckedAttributes
+  def self.included(base)
+    base.extend ClassMethods
+  end
+
+  module ClassMethods
+    def attr_checked(attribute, &validation)
+      define_method "#{attribute}" do
+        instance_variable_get "@#{attribute}"
+      end
+
+      define_method "#{attribute}=" do |value|
+        raise "Invalid attribute Error: #{value}" unless validation.call(value)
+        instance_variable_set("@#{attribute}", value)
+      end
     end
   end
 end
 
 class A
+  include CheckedAttributes
+  # extend ClassMethods ← 普通に module を用意して extend でも動くよね
+
   attr_checked :my_attr do |v|
     v > 20
   end
@@ -71,3 +95,5 @@ a = A.new
 p a.my_attr
 a.my_attr = 21
 p a.my_attr
+
+# 5
