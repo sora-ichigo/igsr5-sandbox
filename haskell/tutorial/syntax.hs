@@ -34,6 +34,10 @@ c = (1, "String", 'c', 3.14)
 factorial :: Int -> Int
 factorial 0 = 1
 factorial n = n * factorial (n-1)
+-- as パターン。引数の後に@ をつけることでパターンマッチの対象の値を参照できる
+firstLetter :: String -> String
+firstLetter "" = "Emptry string."
+firstLetter all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
 -- [ガード]
 -- 他の言語でいう Switch 文みたいなやつ
@@ -49,3 +53,50 @@ bmi n
     | n <= 18.5 = "smart"
     | n <= 25.0 = "nomarl"
     | n > 25.0 = "yabai"
+
+-- [where]
+-- 定義した*関数*内に変数を束縛できる
+-- where キーワードを使わない場合
+totalCheck :: Integer -> Integer -> String
+totalCheck x y
+    | x + y < 10 = "less than 10"
+    | x + y < 100 = "less than 100"
+    | otherwise = "a large number"
+
+-- where キーワードを使う場合
+totalCheck' :: Integer -> Integer -> String
+totalCheck' x y
+    | total < 10 = "less than 10"
+    | total < 100 = "less than 100"
+    | otherwise = "a large number"
+    where total = x + y
+
+-- [let]
+-- どこでも変数を束縛できる
+-- where は関数の終わりのみ
+
+-- [ラムダ式]
+-- 無名関数的なやつ
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
+-- ↑ と同じ。引数一つしか無理なのでカリー化してる。
+addThree' = \x -> \y -> \z -> x+y+z
+
+-- [畳み込み]
+-- foldl: 左畳み込み
+-- foldr: 右畳み込み
+foldlEg = foldl (+) 0 [1, 2, 3]
+-- 6
+
+-- [$]
+-- 右結合な関数適用
+-- sum map sqrt [1, 2, 3] とは書けない。関数は左から評価されていくため
+test_right_merge = sum $ map sqrt [1, 2 ,3]
+
+-- [関数合成]
+-- . で関数を連結することで数学みたいな関数合成できる
+f = \x -> x*x
+g = \x -> x+1
+h = (f.g) 1
+-- f(g(1))
+-- 4

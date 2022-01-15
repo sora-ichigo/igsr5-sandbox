@@ -1,5 +1,9 @@
 import Control.Parallel
 
+-- [par]
+-- par をつけると処理を並列化できる
+
+
 main = a `par` b `par` c `pseq` print (a+b+c)
   where
     a = ack 3 10
