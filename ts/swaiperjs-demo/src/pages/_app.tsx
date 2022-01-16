@@ -1,7 +1,7 @@
 import React from "react";
 import SwiperCore, { Pagination, Navigation } from "swiper";
+import "swiper/css";
 
-SwiperCore.use([Pagination, Navigation]);
 const App = ({ Component, pageProps }: any) => {
   return <Component {...pageProps} />;
 };

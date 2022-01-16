@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import type CoreSwiper from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 
 export const Demo: React.FC = () => {
+  const [swiper, setSwiper] = useState<CoreSwiper | undefined>(undefined);
+
+  const slidePrev = () => swiper?.slidePrev();
+  const slideNext = () => swiper?.slideNext();
+
   return (
     <>
+      <button onClick={() => slidePrev()}>prev</button>
+      <button onClick={() => slideNext()}>next</button>
+
       <Swiper
         slidesPerView={"auto"}
         spaceBetween={10}
@@ -12,6 +20,10 @@ export const Demo: React.FC = () => {
         loop={true}
         loopFillGroupWithBlank={true}
         centeredSlides={true}
+        onInit={(swiper) => setSwiper(swiper)}
+        onSlideChange={(swiper) => {
+          console.log("slide change. to", swiper.activeIndex);
+        }}
         pagination={{
           clickable: true,
         }}
