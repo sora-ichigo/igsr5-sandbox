@@ -25,6 +25,7 @@ export const Demo: React.FC = () => {
     isPrev,
   }) => (
     // TODO: click 連打でバグるから一定間隔イベントを無効化する
+    // ref. https://zenn.dev/attt/articles/swiper-loop-without-duplicate
     // 自分のポジションを isNext, isPrev で取得しないと言う手もある
     <StyledDiv>
       {isActive ? (
