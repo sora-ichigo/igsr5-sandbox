@@ -42,8 +42,11 @@ begin
       r30 <= (others => '0');  -- fp
       r31 <= (others => '0');  -- ra
     elsif (CLK'event and CLK = '1') then
-            -- なんか違う？？
       if (rdSet = '1') then
+        -- NOTE: この分岐は内部実装
+        -- 今回の MIPS ではレジスタファイルのうち
+        -- r1, r2, r3, r29, r30, r31 のアドレスいずれかが使用される
+        -- その前提で条件分岐をハードコーディングしている
         case (rd) is
           when "00001" => r1 <= rC;
           when "00010" => r2 <= rC;
@@ -71,7 +74,6 @@ begin
 
   RAo : process(rsSel, rs, r1, r2, r3, r29, r30, r31)
   begin
-        -- なんか違う？？
     if (rsSel = '1') then  --rA
       case (rs) is
         when "00001" => rA <= r1;
