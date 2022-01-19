@@ -31,6 +31,9 @@ export const Demo: React.FC = () => {
   };
 
   const onMainSlideChange = (swiper: CoreSwiper) => {
+    // TODO: 超高速スワイプすると tab の変更が追いつかない
+    // 現在は slide speed を上げて追いつけるようにしているけど、見た目があんまりよろしくない
+    // pc サイズの時はスワイプ切るのもあり
     slideStatus.current = {
       prev: slideStatus.current.current,
       current: swiper.realIndex,
@@ -84,8 +87,6 @@ export const Demo: React.FC = () => {
   const slideNext = () => swiper?.slideNext();
 
   const AttachOverray: React.FC<CustomSwiperSlideProps> = ({
-    children,
-    isActive,
     isNext,
     isPrev,
   }) => (
