@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import type CoreSwiper from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, SwiperProps } from "swiper/react";
 
 const pages = ["1", "2", "3", "4", "5"];
 
@@ -13,74 +13,127 @@ type CustomSwiperSlideProps = {
 };
 
 export const Demo: React.FC = () => {
+  // NOTE: useSwiper みたいな形で関連処理まとめられそう
   const [swiper, setSwiper] = useState<CoreSwiper | undefined>(undefined);
+  const [tabSwiper, setTabSwiper] = useState<CoreSwiper | undefined>(undefined);
+
+  const slideStatus = useRef<{ prev: number; current: number }>({
+    prev: 0,
+    current: 0,
+  });
+
+  const swiperGeneralProps: SwiperProps = {
+    slidesPerView: "auto",
+    spaceBetween: 10,
+    loop: true,
+    speed: 100,
+    centeredSlides: true,
+  };
+
+  const onMainSlideChange = (swiper: CoreSwiper) => {
+    slideStatus.current = {
+      prev: slideStatus.current.current,
+      current: swiper.realIndex,
+    };
+    const op = checkSlideMove();
+    tabSlideMove(op);
+  };
+
+  // TODO: テスト書く
+  const checkSlideMove = useCallback<() => "NOOP" | "NEXT" | "PREV">(() => {
+    if (slideStatus.current.prev === slideStatus.current.current) {
+      // noop
+      return "NOOP";
+    }
+
+    if (
+      slideStatus.current.current === 0 &&
+      slideStatus.current.prev === pages.length - 1
+    ) {
+      return "NEXT";
+    }
+
+    if (
+      slideStatus.current.current === pages.length - 1 &&
+      slideStatus.current.prev === 0
+    ) {
+      return "PREV";
+    }
+
+    if (slideStatus.current.current > slideStatus.current.prev) {
+      return "NEXT";
+    } else {
+      return "PREV";
+    }
+  }, [slideStatus]);
+
+  const tabSlideMove = (op: "NOOP" | "NEXT" | "PREV") => {
+    switch (op) {
+      case "NEXT":
+        tabSwiper?.slideNext();
+        break;
+      case "PREV":
+        tabSwiper?.slidePrev();
+        break;
+      default:
+      // noop
+    }
+  };
 
   const slidePrev = () => swiper?.slidePrev();
   const slideNext = () => swiper?.slideNext();
 
-  const CustomSwiperSlide: React.FC<CustomSwiperSlideProps> = ({
+  const AttachOverray: React.FC<CustomSwiperSlideProps> = ({
     children,
     isActive,
     isNext,
     isPrev,
   }) => (
-    // TODO: click 連打でバグるから一定間隔イベントを無効化する
-    // ref. https://zenn.dev/attt/articles/swiper-loop-without-duplicate
-    // 自分のポジションを isNext, isPrev で取得しないと言う手もある
-    <StyledDiv>
-      {isActive ? (
-        <>{children}</>
-      ) : isNext ? (
-        <>
-          <OverrayDiv onClick={() => slideNext()} />
-          {children}
-        </>
+    <>
+      {isNext ? (
+        <OverrayDiv onClick={() => slideNext()} />
       ) : isPrev ? (
-        <>
-          <OverrayDiv onClick={() => slidePrev()} />
-          {children}
-        </>
+        <OverrayDiv onClick={() => slidePrev()} />
       ) : null}
-    </StyledDiv>
+    </>
   );
 
   return (
     <>
       <Swiper
-        slidesPerView={"auto"}
-        spaceBetween={10}
-        loop={true}
-        centeredSlides={true}
-        onInit={(swiper) => setSwiper(swiper)}
-        onSlideChange={(swiper) => {
-          console.log("slide change. to", swiper.activeIndex);
-        }}
-        className="mySwiper"
+        {...swiperGeneralProps}
+        onInit={(swiper: CoreSwiper) => setTabSwiper(swiper)}
+        allowTouchMove={false}
+        className="tab"
       >
-        <SwiperSlide>
-          <></>
-        </SwiperSlide>
+        {pages.map((v) => (
+          <SwiperSlide style={{ width: "30%" }} key={v}>
+            <div style={{ textAlign: "center" }}>
+              <Link href="/">
+                <a>tab{v}</a>
+              </Link>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
 
+      <div style={{ height: "50px" }}></div>
+
       <Swiper
-        slidesPerView={"auto"}
-        spaceBetween={10}
-        loop={true}
-        centeredSlides={true}
-        onInit={(swiper) => setSwiper(swiper)}
-        onSlideChange={(swiper) => {
-          console.log("slide change. to", swiper.activeIndex);
-        }}
-        className="mySwiper"
+        {...swiperGeneralProps}
+        onInit={(swiper: CoreSwiper) => setSwiper(swiper)}
+        onSlideChange={onMainSlideChange}
+        className="mainSlide"
       >
         {pages.map((v) => (
           <SwiperSlide style={{ width: "80%" }} key={v}>
             {(props) => (
-              <CustomSwiperSlide {...props}>
+              <StyledDiv>
+                <AttachOverray {...props} />
                 <Link href="/">
                   <a>slide{v}</a>
                 </Link>
-              </CustomSwiperSlide>
+              </StyledDiv>
             )}
           </SwiperSlide>
         ))}
@@ -91,6 +144,7 @@ export const Demo: React.FC = () => {
 
 const StyledDiv = styled.div`
   height: 500px;
+  text-align: center;
 `;
 
 const OverrayDiv = styled.div`
