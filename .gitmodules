@@ -1,0 +1,3 @@
+[submodule "ts/swaiperjs-react-demo"]
+	path = ts/swaiperjs-react-demo
+	url = git@github.com:igsr5/swaiperjs-react-demo.git
