@@ -1,3 +1,13 @@
+# SwaiperJS デモ
+
+Next.js + React + SwaiperJS のテストプロジェクト。
+新ポートフォリオを作るための事前調査。
+
+https://swiperjs.com/
+
+---
+
+
 # 📝 This is a igsr5's original [Next.js](https://nextjs.org/) project.
 
 ## 💡 +@ igsr5's original settings. 💡
