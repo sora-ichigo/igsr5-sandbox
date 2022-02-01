@@ -52,10 +52,14 @@ func BenchmarkConvertWithLargeSize(b *testing.B) {
 
 // Extract
 func BenchmarkExtract(b *testing.B) {
-	extract("./large.png")
+	for i := 0; i < b.N; i++ {
+		extract("./large.png")
+	}
 }
 
 // Crop
 func BenchmarkCrop(b *testing.B) {
-	crop("./large.png")
+	for i := 0; i < b.N; i++ {
+		crop("./large.png")
+	}
 }
