@@ -10,3 +10,6 @@
 [submodule "go/pprof-demo"]
 	path = go/pprof-demo
 	url = git@github.com:igsr5/starter-restapi-golang.git
+[submodule "go/bimg-options"]
+  path = go/bimg-options
+  url = git@github.com:igsr5/bimg-options.git
