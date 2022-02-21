@@ -34,6 +34,19 @@ func resizeAndConvert(b *testing.B, filename string) {
 	src.Convert(bimg.WEBP)
 }
 
+func resize(b *testing.B, filename string) {
+	b.Helper()
+
+	buffer, err := bimg.Read(filename)
+	if err != nil {
+		b.Fatalf("failed to read file. err: %v", err)
+	}
+
+	src := bimg.NewImage(buffer)
+
+	src.Resize(6000, 4000)
+}
+
 // benchmark of convert()
 
 // 3MB, 900x500px
@@ -50,16 +63,30 @@ func BenchmarkConvertWithLargeSize(b *testing.B) {
 	}
 }
 
-// Extract
-func BenchmarkExtract(b *testing.B) {
+// 3MB, 900x500px
+func BenchmarkResizeWithSmallSize(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		extract("./large.png")
+		resize(b, "./small.png")
 	}
 }
 
-// Crop
-func BenchmarkCrop(b *testing.B) {
+// 3MB, 6000x4000px
+func BenchmarkResizeWithLargeSize(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		crop("./large.png")
+		resize(b, "./large.png")
 	}
 }
+
+// Extract
+// func BenchmarkExtract(b *testing.B) {
+// 	for i := 0; i < b.N; i++ {
+// 		extract("./large.png")
+// 	}
+// }
+//
+// Crop
+// func BenchmarkCrop(b *testing.B) {
+// 	for i := 0; i < b.N; i++ {
+// 		crop("./large.png")
+// 	}
+// }
