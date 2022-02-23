@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -11,6 +12,11 @@ func main() {
 	arr := []string{}
 
 	arr = strings.Split(str, ",")
+
+	for _, a := range arr {
+		f, _ := regexp.MatchString("(?)image/webp|image/apng", a)
+		fmt.Println(f)
+	}
 
 	fmt.Println(arr)
 }
