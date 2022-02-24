@@ -1,7 +1,9 @@
 goos: darwin
 goarch: arm64
 pkg: sandbox/sync-pool-demo
-BenchmarkArrayAppend-8   	 3331377	       330.4 ns/op	    2040 B/op	       8 allocs/op
-BenchmarkArrayMake-8     	 6359997	       191.6 ns/op	    1792 B/op	       1 allocs/op
+BenchmarkArrayAppend-8   	 3413938	       331.4 ns/op	    2040 B/op	       8 allocs/op
+BenchmarkArrayMake-8     	 6264216	       192.0 ns/op	    1792 B/op	       1 allocs/op
+BenchmarkWithoutPool-8   	       1	2312002500 ns/op	80282082216 B/op	  105288 allocs/op
+BenchmarkWithPool-8      	     446	   2713834 ns/op	 2480039 B/op	  100001 allocs/op
 PASS
-ok  	sandbox/sync-pool-demo	3.191s
+ok  	sandbox/sync-pool-demo	6.815s
