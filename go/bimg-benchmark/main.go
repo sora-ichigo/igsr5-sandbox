@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
 	"os"
 
 	_ "net/http/pprof"
@@ -12,27 +10,43 @@ import (
 )
 
 func main() {
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
-
+	Resize("img/src_w_6000.png", 3000, 600)
+	// Convert("img/src.png", bimg.WEBP)
 }
 
-// func convert(b *testing.B, filename string) {
-// 	buffer, err := bimg.Read(filename)
-// 	if err != nil {
-// 		b.Fatalf("failed to Read file. err: %v", err)
-// 	}
-//
-// 	newImage, err := bimg.NewImage(buffer).Convert(bimg.WEBP)
-// 	if err != nil {
-// 		b.Fatalf("failed to convert. err: %v", err)
-// 	}
-//
-// 	if bimg.NewImage(newImage).Type() == "png" {
-// 		b.Fatalf("bad convert.\nwant: %s\ngot: %s", "webp", bimg.NewImage(newImage).Type())
-// 	}
-// }
+func Resize(filename string, w int, h int) {
+	buffer, err := bimg.Read(filename)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+
+	img := bimg.NewImage(buffer)
+
+	_, err = img.Process(bimg.Options{Width: w, Height: h, Enlarge: true, Crop: true})
+	// 	_, err = img.Process(bimg.Options{Width: w, Enlarge: true})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+
+	// bimg.Write("out/dst.png", img.Image())
+}
+
+func Convert(filename string, imgType bimg.ImageType) {
+	buffer, err := bimg.Read(filename)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+
+	img := bimg.NewImage(buffer)
+
+	_, err = img.Process(bimg.Options{Type: imgType})
+	// _, err = img.Process(bimg.Options{Width: w, Enlarge: true})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+
+	bimg.Write("out/webp.png", img.Image())
+}
 
 func extract(filename string) {
 	buffer, err := bimg.Read(filename)
