@@ -1,0 +1,15 @@
+{
+  "name": "module-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "igsr5 <i@gsr5.com> (https://igsr5.dev/)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "ts-node": "^10.7.0"
+  }
+}
