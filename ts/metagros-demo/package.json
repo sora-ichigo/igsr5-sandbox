@@ -1,0 +1,12 @@
+{
+  "name": "metagros-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "metagros": "^0.1.8",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
+  }
+}
