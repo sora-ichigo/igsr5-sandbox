@@ -1,0 +1,11 @@
+name: Generate code from proto
+
+on:
+  pull_request:
+
+jobs:
+  gen-from-proto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+

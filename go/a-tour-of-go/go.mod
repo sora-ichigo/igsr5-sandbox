@@ -1,4 +1,4 @@
-module sandbox/fibonacchi
+module sandbox/fibonacch
 
 go 1.16
 
