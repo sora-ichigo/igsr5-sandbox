@@ -16,10 +16,10 @@ jobs:
         if: ${{ github.event.pull_request.merged }}
         run: echo "merge"
       - name: close
-        if: ${{ github.event.action}} == closed
+        if: ${{ github.event.action == 'closed' }}
         run: |
           echo ${{github.event.action}}
       - name: not close
-        if: ${{ github.event.action}} != closed
+        if: ${{ github.event.action != 'closed'}}
         run: |
           echo ${{github.event.action}}
