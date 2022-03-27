@@ -3,6 +3,7 @@ name: Generate code from proto
 on:
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
+  push:
 
 jobs:
   gen-from-proto:
