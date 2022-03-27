@@ -2,10 +2,16 @@ name: Generate code from proto
 
 on:
   pull_request:
+    types: [ opened, synchronize, reopened, closed ]
 
 jobs:
   gen-from-proto:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
+      - name: not merge
+        if: false == ${{ github.event.pull_request.merged }}
+        run: echo "not merge"
+      - name: merge
+        if: ${{ github.event.pull_request.merged }}
+        run: echo "merge"
