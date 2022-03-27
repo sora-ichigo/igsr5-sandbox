@@ -3,9 +3,6 @@ name: Generate code from proto
 on:
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
-  push:
-    branches:
-      - master
 
 jobs:
   gen-from-proto:
@@ -18,3 +15,6 @@ jobs:
       - name: merge
         if: ${{ github.event.pull_request.merged }}
         run: echo "merge"
+    - name: close
+        if: false == ${{ github.event.pull_request.merged }} && ${{ github.event.pull_request.closed }}
+        run: echo "close"
