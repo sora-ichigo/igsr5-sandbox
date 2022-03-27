@@ -9,4 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo ${{ github.event.merged }}
+      - name: not merge
+        if: false == ${{ github.event.pull_request.merged }}
+        run: echo "not merge"
+      - name: merge
+        if: ${{ github.event.pull_request.merged }}
+        run: echo "merge"
