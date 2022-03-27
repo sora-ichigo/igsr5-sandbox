@@ -16,8 +16,6 @@ jobs:
         if: ${{ github.event.pull_request.merged }}
         run: echo "merge"
       - name: close
-        if: false == ${{ github.event.pull_request.merged }}
+        if: false == ${{ github.event.pull_request.merged }} && ${{ github.event.action}} == "closed"
         run: |
-          echo "close"
-          echo ${{github.event.pull_request.closed}}
-      - run: echo '${{toJSON(github)}}'
+          echo ${{github.event.action}}
