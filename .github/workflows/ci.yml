@@ -13,5 +13,5 @@ jobs:
         if: false == ${{ github.event.pull_request.merged }}
         run: echo "not merge"
       - name: merge
-        if: ${{ github.event.pull_request.merged }}
+        if: ${{ github.event.merged }}
         run: echo "merge"
