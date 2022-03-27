@@ -2,10 +2,11 @@ name: Generate code from proto
 
 on:
   pull_request:
+    types: [ opened, synchronize, reopened, closed ]
 
 jobs:
   gen-from-proto:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
+      - run: echo ${{ github.event.merged }}
