@@ -1,7 +1,6 @@
 CFLAGS=-dtd=c11 -g -static
-1:
-	gcc -o hoge 1.c
-test: 1
+main: main.c
+test: main
 	./test.sh
 .PHONY: clean
 clean:
