@@ -79,7 +79,7 @@ Token *tokenize(char *p) {
       continue;
     }
 
-    error("failed to tokenize.");
+    error_at(user_input ,"failed to tokenize.");
   }
 
   new_token(TK_EOF, cur, p);
@@ -88,7 +88,7 @@ Token *tokenize(char *p) {
 
 int expect_number() {
   if (token->kind != TK_NUM)
-    error("faled to expect number.");
+    error_at(user_input ,"faled to expect number.");
   int val = token->val;
   token = token->next;
   return val;
@@ -108,7 +108,7 @@ bool at_eof() {
 
 void expect(char op) {
   if (token->kind != TK_RESERVED || token->str[0] != op)
-    error("not expect '%c'", op);
+    error_at(user_input ,"faled to expect.");
   token = token->next;
 }
 
@@ -116,6 +116,8 @@ int main(int argc, char **argv) {
   if (argc != 2) {
     error("bad attributes. expect count is 2");
   }
+
+  user_input = argv[1];
 
   token = tokenize(argv[1]);
 
