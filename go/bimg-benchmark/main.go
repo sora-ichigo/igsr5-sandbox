@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	// Resize("img/src_w_13000.png", 2560)
-	Convert("img/src_w_13000.png", bimg.WEBP)
+	Resize("img/src_w_13000.jpeg", 2560)
+	Resize("img/src_w_13000.jpeg", 1920)
 }
 
 func Resize(filename string, w int) {
@@ -29,7 +29,8 @@ func Resize(filename string, w int) {
 		return
 	}
 
-	bimg.Write("dst", img.Image())
+	// dst := fmt.Sprintf("img/src_w_%d.%s", w, img.Type())
+	// bimg.Write(dst, img.Image())
 }
 
 func Convert(filename string, imgType bimg.ImageType) {
@@ -48,33 +49,3 @@ func Convert(filename string, imgType bimg.ImageType) {
 
 	bimg.Write("dst", img.Image())
 }
-
-//
-// func extract(filename string) {
-// 	buffer, err := bimg.Read(filename)
-// 	if err != nil {
-// 		fmt.Fprintln(os.Stderr, err)
-// 	}
-//
-// 	bimg.NewImage(buffer).Extract(500, 500, 30, 30)
-// 	if err != nil {
-// 		fmt.Fprintln(os.Stderr, err)
-// 	}
-// }
-//
-// func crop(filename string) {
-// 	buffer, err := bimg.Read(filename)
-// 	if err != nil {
-// 		fmt.Fprintln(os.Stderr, err)
-// 	}
-// 	options := bimg.Options{
-// 		Width:   500,
-// 		Height:  500,
-// 		Crop:    true,
-// 		Gravity: bimg.GravityCentre,
-// 	}
-// 	bimg.NewImage(buffer).Process(options)
-// 	if err != nil {
-// 		fmt.Fprintln(os.Stderr, err)
-// 	}
-// }

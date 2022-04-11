@@ -3,12 +3,23 @@ package main
 import "testing"
 
 func BenchmarkResize(b *testing.B) {
-	tests := []string{"img/src_w_2560.png", "img/src_w_3000.png", "img/src_w_6000.png"}
+	tests := []struct {
+		name     string
+		filename string
+		width    int
+	}{
+		{name: "width 1280px to 300px", filename: "img/src_w_1280.jpeg", width: 300},
+		{name: "width 320px to 300px", filename: "img/src_w_320.jpeg", width: 300},
+		{name: "width 1280px to 320px", filename: "img/src_w_1280.jpeg", width: 320},
+		{name: "width 320px to 320px", filename: "img/src_w_320.jpeg", width: 320},
+		{name: "width 2560px to 1500px", filename: "img/src_w_2560.jpeg", width: 1500},
+		{name: "width 1920px to 1500px", filename: "img/src_w_1920.jpeg", width: 1500},
+	}
 
-	for _, t := range tests {
-		b.Run(t, func(b *testing.B) {
+	for _, tt := range tests {
+		b.Run(tt.name, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Resize(t, 2560, 600)
+				Resize(tt.filename, tt.width)
 			}
 		})
 	}

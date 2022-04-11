@@ -1,0 +1,11 @@
+goos: darwin
+goarch: arm64
+pkg: sandbox/bimg-benchmark
+BenchmarkResize/width_1280px_to_300px-8         	     141	   8508592 ns/op	  161531 B/op	      19 allocs/op
+BenchmarkResize/width_320px_to_300px-8          	     332	   3624031 ns/op	   30392 B/op	      15 allocs/op
+BenchmarkResize/width_1280px_to_320px-8         	     195	   6100157 ns/op	  164362 B/op	      21 allocs/op
+BenchmarkResize/width_320px_to_320px-8          	     734	   1635162 ns/op	   33184 B/op	      13 allocs/op
+BenchmarkResize/width_2560px_to_1500px-8        	      10	 110213633 ns/op	  655800 B/op	      15 allocs/op
+BenchmarkResize/width_1920px_to_1500px-8        	      14	  78961533 ns/op	  483777 B/op	      15 allocs/op
+PASS
+ok  	sandbox/bimg-benchmark	9.571s
