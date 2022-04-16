@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem 'grpc', '~> 1.45'
+gem 'protosum', '~> 0.9.9'
+
