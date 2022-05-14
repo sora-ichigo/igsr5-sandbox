@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	userpb "github.com/igsr5/protosum/go/lib/user"
+	a_userpb "github.com/igsr5/portfolio-proto/go/lib/user"
 )
 
 func main() {
-	fmt.Printf("#%v", userpb.User{})
+	fmt.Printf("#%v", a_userpb.User{})
 }
