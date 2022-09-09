@@ -4,6 +4,9 @@
 [submodule "ts/react-flip-move-demo"]
 	path = ts/react-flip-move-demo
 	url = git@github.com:igsr5/starter-nextjs-app.git
+[submodule "html/swipable-demo"]
+	path = html/swipable-demo
+	url = 
 [submodule "go/isucon9"]
 	path = go/isucon9
 	url = https://github.com/igsr5/isucon9

@@ -1,0 +1,32 @@
+html {
+  background-color: aqua;
+  height: 100%;
+}
+
+body {
+  height: 1000px;
+}
+
+.container {
+  z-index: 1;
+  background-color: white;
+  border: 1px #000 solid;
+  overflow: scroll;
+  height: 1000px;
+}
+
+.box {
+  width: 3000px;
+  height: 3000px;
+}
+
+.fixed-container {
+  border: 3px rgb(255, 0, 0) solid;
+  overflow: scroll;
+  height: 1000px;
+}
+
+.cnt {
+  height: 1200px;
+  background-color: #000;
+}
