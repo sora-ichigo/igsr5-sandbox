@@ -1,4 +1,5 @@
 import {
+  $createParagraphNode,
   $getSelection,
   $isRangeSelection,
   EditorState,
@@ -69,6 +70,20 @@ function ToolbarPlugin() {
 
   const [blockType, setBlockType] = useState<BlockType>("paragraph");
   const [editor] = useLexicalComposerContext();
+
+  const formatParagraph = useCallback(() => {
+    if (blockType !== "paragraph") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $wrapLeafNodesInElements(selection, () => $createParagraphNode());
+        }
+      });
+
+      setBlockType("paragraph");
+    }
+  }, [blockType, editor]);
+
   const formatHeading = useCallback(
     (type: HeadingTagType) => {
       if (blockType !== type) {
@@ -94,6 +109,9 @@ function ToolbarPlugin() {
       </button>
       <button type="button" onClick={() => formatHeading("h3")}>
         h3
+      </button>
+      <button type="button" onClick={() => formatParagraph()}>
+        p
       </button>
     </div>
   );
