@@ -15,7 +15,7 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $wrapLeafNodesInElements } from "@lexical/selection";
 import {
@@ -32,6 +32,12 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   INSERT_CHECK_LIST_COMMAND,
 } from "@lexical/list";
+import {
+  registerCodeHighlighting,
+  $createCodeNode,
+  CodeNode,
+  CodeHighlightNode,
+} from "@lexical/code";
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -49,6 +55,8 @@ function Editor() {
     QuoteNode,
     ListItemNode,
     ListNode,
+    CodeNode,
+    CodeHighlightNode,
   ];
 
   const initialConfig = {
@@ -69,6 +77,7 @@ function Editor() {
         />
         <ListPlugin />
         <CheckListPlugin />
+        <CodeHighlightPlugin />
         <AutoFocusPlugin />
         <OnChangePlugin onChange={onChange} />
         <HistoryPlugin />
@@ -90,6 +99,7 @@ function ToolbarPlugin() {
     number: "Numbered List",
     bullet: "Bullet List",
     check: "Check List",
+    code: "Code Block",
   } as const;
   type BlockType = keyof typeof SupportedBlockType;
 
@@ -119,6 +129,19 @@ function ToolbarPlugin() {
       });
 
       setBlockType("quote");
+    }
+  }, [blockType, editor]);
+
+  const formatCode = useCallback(() => {
+    if (blockType !== "code") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $wrapLeafNodesInElements(selection, () => $createCodeNode());
+        }
+      });
+
+      setBlockType("code");
     }
   }, [blockType, editor]);
 
@@ -199,8 +222,21 @@ function ToolbarPlugin() {
       <button type="button" onClick={() => formatCheckList()}>
         check
       </button>
+      <button type="button" onClick={() => formatCode()}>
+        code
+      </button>
     </div>
   );
 }
 
 export default Editor;
+
+export const CodeHighlightPlugin: React.FC = () => {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    return registerCodeHighlighting(editor);
+  }, [editor]);
+
+  return null;
+};
