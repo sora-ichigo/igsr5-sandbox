@@ -20,6 +20,7 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useCallback, useEffect, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $wrapLeafNodesInElements } from "@lexical/selection";
+import { AutoLinkNode, LinkNode } from "@lexical/link";
 import {
   HeadingNode,
   QuoteNode,
@@ -40,6 +41,8 @@ import {
   CodeNode,
   CodeHighlightNode,
 } from "@lexical/code";
+import { TRANSFORMERS } from "@lexical/markdown";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -52,13 +55,15 @@ function onError(error: Error) {
 }
 
 function Editor() {
-  const nodes: Klass<LexicalNode>[] = [
+  const nodes: Array<Klass<LexicalNode>> = [
     HeadingNode,
-    QuoteNode,
-    ListItemNode,
     ListNode,
+    ListItemNode,
+    QuoteNode,
     CodeNode,
     CodeHighlightNode,
+    AutoLinkNode,
+    LinkNode,
   ];
 
   const initialConfig = {
@@ -80,6 +85,7 @@ function Editor() {
         />
         <ListPlugin />
         <CheckListPlugin />
+        <MarkdownPlugin />
         <CodeHighlightPlugin />
         <AutoFocusPlugin />
         <OnChangePlugin onChange={onChange} />
@@ -277,6 +283,11 @@ export const CodeHighlightPlugin: React.FC = () => {
   }, [editor]);
 
   return null;
+};
+
+export const MarkdownPlugin: React.FC = () => {
+  console.log(TRANSFORMERS);
+  return <MarkdownShortcutPlugin transformers={TRANSFORMERS} />;
 };
 
 export default Editor;
