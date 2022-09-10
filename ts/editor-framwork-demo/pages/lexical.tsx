@@ -12,6 +12,8 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useCallback, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -23,6 +25,13 @@ import {
   $createHeadingNode,
   $createQuoteNode,
 } from "@lexical/rich-text";
+import {
+  ListItemNode,
+  ListNode,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  INSERT_CHECK_LIST_COMMAND,
+} from "@lexical/list";
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -35,7 +44,12 @@ function onError(error: Error) {
 }
 
 function Editor() {
-  const nodes: Klass<LexicalNode>[] = [HeadingNode, QuoteNode];
+  const nodes: Klass<LexicalNode>[] = [
+    HeadingNode,
+    QuoteNode,
+    ListItemNode,
+    ListNode,
+  ];
 
   const initialConfig = {
     namespace: "demo",
@@ -53,6 +67,8 @@ function Editor() {
           }
           placeholder={"something"}
         />
+        <ListPlugin />
+        <CheckListPlugin />
         <AutoFocusPlugin />
         <OnChangePlugin onChange={onChange} />
         <HistoryPlugin />
@@ -71,6 +87,9 @@ function ToolbarPlugin() {
     h5: "Heading 5",
     h6: "Heading 6",
     quote: "Quate",
+    number: "Numbered List",
+    bullet: "Bullet List",
+    check: "Check List",
   } as const;
   type BlockType = keyof typeof SupportedBlockType;
 
@@ -100,6 +119,42 @@ function ToolbarPlugin() {
       });
 
       setBlockType("quote");
+    }
+  }, [blockType, editor]);
+
+  const formatBulletList = useCallback(() => {
+    if (blockType !== "bullet") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+        }
+      });
+      setBlockType("bullet");
+    }
+  }, [blockType, editor]);
+
+  const formatNumberList = useCallback(() => {
+    if (blockType !== "number") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+        }
+      });
+      setBlockType("number");
+    }
+  }, [blockType, editor]);
+
+  const formatCheckList = useCallback(() => {
+    if (blockType !== "check") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
+        }
+      });
+      setBlockType("check");
     }
   }, [blockType, editor]);
 
@@ -134,6 +189,15 @@ function ToolbarPlugin() {
       </button>
       <button type="button" onClick={() => formatQuote()}>
         quote
+      </button>
+      <button type="button" onClick={() => formatBulletList()}>
+        list
+      </button>
+      <button type="button" onClick={() => formatNumberList()}>
+        number
+      </button>
+      <button type="button" onClick={() => formatCheckList()}>
+        check
       </button>
     </div>
   );
