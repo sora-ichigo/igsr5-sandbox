@@ -12,12 +12,17 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import { HeadingNode } from "@lexical/rich-text";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useCallback, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $wrapLeafNodesInElements } from "@lexical/selection";
-import { HeadingTagType, $createHeadingNode } from "@lexical/rich-text";
+import {
+  HeadingNode,
+  QuoteNode,
+  HeadingTagType,
+  $createHeadingNode,
+  $createQuoteNode,
+} from "@lexical/rich-text";
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -30,7 +35,7 @@ function onError(error: Error) {
 }
 
 function Editor() {
-  const nodes: Klass<LexicalNode>[] = [HeadingNode];
+  const nodes: Klass<LexicalNode>[] = [HeadingNode, QuoteNode];
 
   const initialConfig = {
     namespace: "demo",
@@ -65,6 +70,7 @@ function ToolbarPlugin() {
     h4: "Heading 4",
     h5: "Heading 5",
     h6: "Heading 6",
+    quote: "Quate",
   } as const;
   type BlockType = keyof typeof SupportedBlockType;
 
@@ -81,6 +87,19 @@ function ToolbarPlugin() {
       });
 
       setBlockType("paragraph");
+    }
+  }, [blockType, editor]);
+
+  const formatQuote = useCallback(() => {
+    if (blockType !== "quote") {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $wrapLeafNodesInElements(selection, () => $createQuoteNode());
+        }
+      });
+
+      setBlockType("quote");
     }
   }, [blockType, editor]);
 
@@ -112,6 +131,9 @@ function ToolbarPlugin() {
       </button>
       <button type="button" onClick={() => formatParagraph()}>
         p
+      </button>
+      <button type="button" onClick={() => formatQuote()}>
+        quote
       </button>
     </div>
   );
