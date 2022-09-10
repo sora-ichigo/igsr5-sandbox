@@ -3,8 +3,10 @@ import {
   $getSelection,
   $isRangeSelection,
   EditorState,
+  FORMAT_TEXT_COMMAND,
   Klass,
   LexicalNode,
+  TextFormatType,
 } from "lexical";
 
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -67,6 +69,7 @@ function Editor() {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <ToolbarPlugin />
+      <InlineToolbarPlugin />
 
       <div>
         <RichTextPlugin
@@ -229,7 +232,42 @@ function ToolbarPlugin() {
   );
 }
 
-export default Editor;
+const textFormat = [
+  "bold",
+  "italic",
+  "underline",
+  "strikethrough",
+  "code",
+  "subscript",
+  "superscript",
+];
+
+const InlineToolbarPlugin: React.FC = () => {
+  const [editor] = useLexicalComposerContext();
+
+  const formatText = useCallback(
+    (format: TextFormatType) => {
+      editor.update(() => {
+        editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
+      });
+    },
+    [editor]
+  );
+
+  return (
+    <div>
+      {textFormat.map((format) => (
+        <button
+          key={format}
+          type="button"
+          onClick={() => formatText(format as TextFormatType)}
+        >
+          {format}
+        </button>
+      ))}
+    </div>
+  );
+};
 
 export const CodeHighlightPlugin: React.FC = () => {
   const [editor] = useLexicalComposerContext();
@@ -240,3 +278,5 @@ export const CodeHighlightPlugin: React.FC = () => {
 
   return null;
 };
+
+export default Editor;
