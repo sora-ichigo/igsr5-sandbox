@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.6
-// source: example.proto
+// source: proto/example.proto
 
-package main
+package example
 
 import (
 	context "context"
@@ -100,5 +100,5 @@ var TestService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "example.proto",
+	Metadata: "proto/example.proto",
 }
