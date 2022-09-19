@@ -10,6 +10,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+// TODO: ここにprotoc plugin のパース結果を置いて参照できるようにする
+
 // service&rpc name, rpc request, host を受け取って rpc response を返す
 func main() {
 	ctx := context.Background()
