@@ -3,6 +3,7 @@ module github.com/igsr5/unary-rpc-call-client
 go 1.19
 
 require (
+	github.com/jhump/protoreflect v1.13.0
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.27.1
 )
