@@ -1,0 +1,16 @@
+syntax="proto3";
+package github.com.igsr5.example;
+
+option go_package = ".;example";
+
+message ExampleRequest {
+    string name = 1;
+}
+
+message ExampleResponse {
+    string name = 1;
+}
+
+service TestService {
+  rpc TestMethod (ExampleRequest) returns (ExampleResponse);
+};

@@ -1,0 +1,21 @@
+package main
+
+type PersonV2 struct {
+	Name NameV2
+}
+
+type NameV2 struct {
+	First string
+	Last  string
+}
+
+func main() {
+  v := []byte{}
+  {{ range .Value }}
+  v = append(v, {{ . }})
+  {{ end }}
+	fmt.Println("Hello, World!")
+	var p PersonV2
+	json.Unmarshal(v, &p)
+	fmt.Printf("v = %v", p)
+}
