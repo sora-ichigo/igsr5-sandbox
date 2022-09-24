@@ -1,5 +1,5 @@
 PLUGIN_DIR=./bin/protoc-gen-client
-SRC=$(shell find ./src -name '*.proto')
+SRC=$(shell find ./proto -name '*.proto')
 DIST=./dist
 
 .PHONY: debug
@@ -8,7 +8,7 @@ debug: gen
 
 .PHONY: gen
 gen: build
-	protoc --plugin=${PLUGIN_DIR} --client_out=${DIST} ${SRC}
+	protoc --plugin=${PLUGIN_DIR} --client_out=${DIST} --go_out=. --go-grpc_out=require_unimplemented_servers=false:. ${SRC}
 
 .PHONY: build
 build:

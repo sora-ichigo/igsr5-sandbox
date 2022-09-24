@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package example;
+
+option go_package = "./example;example_pb";
+
+message Example {
+  string name = 1;
+  int32 id = 2;
+  repeated string tags = 3;
+}
+
+service ExampleService {
+  rpc Echo (Example) returns (Example) {}
+}
