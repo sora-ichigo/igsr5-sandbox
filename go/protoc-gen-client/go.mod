@@ -5,6 +5,7 @@ go 1.19
 require github.com/golang/protobuf v1.5.2
 
 require (
+	github.com/jhump/protoreflect v1.13.0
 	github.com/pkg/errors v0.9.1
 	golang.org/x/tools v0.1.12
 )

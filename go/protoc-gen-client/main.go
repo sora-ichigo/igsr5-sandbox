@@ -133,8 +133,10 @@ import (
 	descriptor "github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
 
-func main() {
-  var dfs = make([]*descriptor.FileDescriptorProto, 0, {{len .DfsBytes }})
+var dfs []*descriptor.FileDescriptorProto
+
+func init() {
+  dfs = make([]*descriptor.FileDescriptorProto, 0, {{len .DfsBytes }})
   var err error
 
   {{ range $i, $dfsByte := .DfsBytes }}
@@ -148,7 +150,20 @@ func main() {
     dfs = append(dfs, f__{{ $i }})
 
   {{ end }}
+}
 
-  fmt.Printf("%+v", dfs)
+
+func Descriptor() ([]*desc.FileDescriptor, error) {
+	var descFiles = make([]*desc.FileDescriptor, 0, len(dfs))
+	for _, df := range dfs {
+		f, err := desc.CreateFileDescriptor(df, &desc.FileDescriptor{})
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to create file descriptor")
+		}
+
+		descFiles = append(descFiles, f)
+	}
+
+	return descFiles, nil
 }
 `
