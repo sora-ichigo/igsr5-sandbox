@@ -7,3 +7,10 @@ message Example {
   int32 id = 2;
   repeated string tags = 3;
 }
+
+service ExampleService {
+  rpc Create (Example) returns (Example) {}
+  rpc Read (Example) returns (Example) {}
+  rpc Update (Example) returns (Example) {}
+  rpc Delete (Example) returns (Example) {}
+}
