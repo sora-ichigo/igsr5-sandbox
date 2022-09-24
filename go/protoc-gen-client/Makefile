@@ -2,6 +2,10 @@ PLUGIN_DIR=./bin/protoc-gen-client
 SRC=$(shell find ./src -name '*.proto')
 DIST=./dist
 
+.PHONY: debug
+debug: gen
+	go run ./dist/gen.go
+
 .PHONY: gen
 gen: build
 	protoc --plugin=${PLUGIN_DIR} --client_out=${DIST} ${SRC}
