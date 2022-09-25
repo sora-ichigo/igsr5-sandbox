@@ -28,7 +28,7 @@ func init() {
 
 }
 
-func Descriptor() ([]*desc.FileDescriptor, error) {
+func FileDescriptors() ([]*desc.FileDescriptor, error) {
 	var descFiles = make([]*desc.FileDescriptor, 0, len(dfs))
 	for _, df := range dfs {
 		f, err := desc.CreateFileDescriptor(df, &desc.FileDescriptor{})

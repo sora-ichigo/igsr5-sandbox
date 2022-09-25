@@ -4,7 +4,7 @@ DIST=./dist
 
 .PHONY: debug
 debug: gen
-	go run ./dist/gen.go
+	go test ./dist
 
 .PHONY: gen
 gen: build
