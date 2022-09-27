@@ -52,7 +52,7 @@ func TestCall(t *testing.T) {
 	t.Parallel()
 	c := NewClient()
 
-	_, err := c.Call(context.Background(), "example.ExampleService", "Echo", []byte(`{"name": "aa", "id": 1}`), "localhost:8080")
+	_, err := c.Call(context.Background(), "example.ExampleService", "Echo", []byte(`{"name": "aa", "id": 1, "nested": { "name": "bb"}, "nestedV2": { "name": "cc" }}`), "localhost:8080")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -7,7 +7,17 @@ option go_package = "./example;example_pb";
 message Example {
   string name = 1;
   int32 id = 2;
-  repeated string tags = 3;
+  Nested nested = 4;
+
+  message NestedV2 {
+    string name = 1;
+  }
+
+  NestedV2 nestedV2 = 5;
+}
+
+message Nested {
+  string name = 1;
 }
 
 service ExampleService {
