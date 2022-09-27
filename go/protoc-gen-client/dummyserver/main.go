@@ -42,6 +42,7 @@ func newExampleService() example_pb.ExampleServiceServer {
 type dummyserverImpl struct{}
 
 func (d *dummyserverImpl) Echo(ctx context.Context, req *example_pb.Example) (*example_pb.Example, error) {
+	fmt.Println("Echo called")
 	return &example_pb.Example{
 		Name: "pong",
 	}, nil
