@@ -1,28 +1,10 @@
 {
-  "name": "oreore-mode",
-  "version": "0.0.1",
-  "author": "YOUR NAME",
-  "license": "YOUR LICENSE",
-  "description": "A tiny programming language that supports Language Server Protocol",
-  "engines": {
-    "vscode": "^1.52.1"
-  },
-  "main": "./extension.js",
-  "activationEvents": [
-    "onLanguage:oreore"
-  ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "oreore",
-        "extensions": [
-          ".ore"
-        ]
-      }
-    ]
-  },
-  "dependencies": {
-    "vscode-languageclient": "^7.0.0"
-  },
-  "private": true
+  "name": "min-language-with-lsp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "generator-code": "^1.7.0",
+    "yo": "^4.3.0"
+  }
 }
