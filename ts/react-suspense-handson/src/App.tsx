@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Suspense } from "react";
+import { Suspense, useMemo, useState } from "react";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -7,7 +7,6 @@ const App: React.FC = () => {
     <div className="text-center">
       <h1 className="text-2xl">React App!</h1>
       <Suspense fallback={<p>loading...</p>}>
-        <p>test</p>
         <Component />
       </Suspense>
     </div>
@@ -21,5 +20,16 @@ const sleep = (ms: number) => {
 };
 
 const Component: React.FC = () => {
-  throw sleep(1000);
+  const [data, setData] = useState<string | null>(null);
+  if (data === null) {
+    throw fetchData1().then(setData);
+  }
+  const _ = useMemo(() => console.log("loading"), [data]);
+
+  return <p>Data is {data}</p>;
 };
+
+async function fetchData1(): Promise<string> {
+  await sleep(1000);
+  return `Hello, ${(Math.random() * 1000).toFixed(0)}`;
+}
