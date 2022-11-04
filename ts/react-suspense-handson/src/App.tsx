@@ -9,7 +9,30 @@ const App: React.FC = () => {
       <Suspense fallback={<p>loading...</p>}>
         <Component />
       </Suspense>
+
+      {[1, 2, 3].map((i) => {
+        return <Comment key={1} />;
+      })}
     </div>
+  );
+};
+
+const Comment: React.FC = () => {
+  const [comment, setComment] = useState("a");
+  const third = "aa";
+  const first = "bb";
+
+  React.useEffect(() => {
+    const a = comment;
+    first;
+  }, [third]);
+
+  return (
+    <input
+      type="text"
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+    />
   );
 };
 
