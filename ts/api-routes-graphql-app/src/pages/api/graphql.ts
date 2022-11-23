@@ -1,15 +1,10 @@
+import fs from "fs";
 import { createYoga, createSchema } from "graphql-yoga";
+import { Resolvers } from "../../__generated__/gql/resolvers";
 
-const typeDefs = /* GraphQL */ `
-  type Query {
-    users: [User!]!
-  }
-  type User {
-    name: String
-  }
-`;
+const typeDefs = fs.readFileSync("./src/schema.graphql", "utf8");
 
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     users() {
       return [{ name: "Nextjs" }];
