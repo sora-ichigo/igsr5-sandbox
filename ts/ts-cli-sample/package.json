@@ -1,0 +1,14 @@
+{
+  "name": "ts-cli-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "ts-cli-sample": "index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "tsc": "^2.0.4",
+    "typescript": "^4.9.3"
+  }
+}
