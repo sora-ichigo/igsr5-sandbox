@@ -34,6 +34,6 @@ class GridPointSet
 
   # @param [GridPoint] grid_point
   def contain?(grid_point)
-    self.grid_points[0].same_coordinates_with?(grid_point) || self.grid_points[1].same_coordinates_with?(grid_point)
+    self.grid_points.reject { |is_contain, v| is_contain || v.same_coordinates_with?(grid_point)}
   end
 end
