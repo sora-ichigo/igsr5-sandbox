@@ -106,5 +106,12 @@ describe "GridPointSet" do
         is_expected.to eq true
       end
     end
+    context "when grid_points doesn't connect" do
+      let(:grid_point1) { GridPoint.new(1, 2) }
+      let(:grid_point2) { GridPoint.new(10, 20) }
+      it "should return false" do
+        is_expected.to eq false
+      end
+    end
   end
 end
