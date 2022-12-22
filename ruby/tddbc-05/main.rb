@@ -20,7 +20,8 @@ class GridPoint
     condition1 = self.x-1 == grid_point.x && self.y == grid_point.y
     condition2 = self.x+1 == grid_point.x && self.y == grid_point.y
     condition3 = self.x == grid_point.x && self.y-1 == grid_point.y
+    condition4 = self.x == grid_point.x && self.y+1 == grid_point.y
 
-    condition1 || condition2 || condition3
+    condition1 || condition2 || condition3 || condition4
   end
 end

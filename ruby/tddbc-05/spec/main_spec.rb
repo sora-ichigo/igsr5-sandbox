@@ -44,5 +44,8 @@ describe "GridPoint" do
     it "(x,y-1) is neighbor" do
       expect(obj.neighbor_of?(GridPoint.new(x, y-1))).to eq true
     end
+    it "(x,y+1) is neighbor" do
+      expect(obj.neighbor_of?(GridPoint.new(x, y+1))).to eq true
+    end
   end
 end
