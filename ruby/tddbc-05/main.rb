@@ -25,3 +25,10 @@ class GridPoint
     condition1 || condition2 || condition3 || condition4
   end
 end
+
+class GridPointSet
+  attr_accessor :grid_points
+  def initialize(grid_point1, grid_point2)
+    @grid_points = [grid_point1, grid_point2]
+  end
+end
