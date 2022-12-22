@@ -19,6 +19,7 @@ class GridPoint
   def neighbor_of?(grid_point)
     condition1 = self.x-1 == grid_point.x && self.y == grid_point.y
     condition2 = self.x+1 == grid_point.x && self.y == grid_point.y
+    condition3 = self.x == grid_point.x && self.y-1 == grid_point.y
 
     condition1 || condition2
   end
