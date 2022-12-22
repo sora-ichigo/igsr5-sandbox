@@ -9,6 +9,6 @@ class GridPoint
   end
 
   def notation
-    "#{x},#{y}"
+    "(#{x},#{y})"
   end
 end
