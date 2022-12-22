@@ -25,6 +25,5 @@ describe "GridPoint" do
         expect(obj.has_same_coordinates_with(GridPoint.new(x, y))).to eq true
       end
     end
-
   end
 end

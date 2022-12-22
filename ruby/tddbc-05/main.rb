@@ -13,6 +13,6 @@ class GridPoint
   end
 
   def has_same_coordinates_with(grid_point)
-
+    self.x == grid_point.x && self.y == grid_point.y
   end
 end
