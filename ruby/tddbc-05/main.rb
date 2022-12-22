@@ -11,4 +11,8 @@ class GridPoint
   def notation
     "(#{x},#{y})"
   end
+
+  def has_same_coordinates_with(grid_point)
+
+  end
 end

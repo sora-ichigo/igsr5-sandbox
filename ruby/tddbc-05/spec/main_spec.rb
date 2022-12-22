@@ -18,4 +18,13 @@ describe "GridPoint" do
       expect(obj.notation).to eq "(#{x},#{y})"
     end
   end
+
+  describe "#has_same_coordinates_with" do
+    context "when two GridPoint object are same coordinates" do
+      it "should return true" do
+        expect(obj.has_same_coordinates_with(GridPoint.new(x, y))).to eq true
+      end
+    end
+
+  end
 end
