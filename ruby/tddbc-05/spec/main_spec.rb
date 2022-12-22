@@ -19,7 +19,7 @@ describe "GridPoint" do
     end
   end
 
-  describe "#has_same_coordinates_with" do
+  describe "#same_coordinates_with?" do
     context "when two GridPoint object have same coordinates" do
       it "should return true" do
         expect(obj.same_coordinates_with?(GridPoint.new(x, y))).to eq true
@@ -30,6 +30,13 @@ describe "GridPoint" do
       it "should return true" do
         expect(obj.same_coordinates_with?(GridPoint.new(x+1, y+1))).to eq false
       end
+    end
+  end
+
+  # 隣り合う条件 (x-1,y),(x+1,y),(x,y-1),(x,y+1)
+  describe "#neighbor_of?" do
+    it "(x-1,y) is neighbor" do
+      expect(obj.neighbor_of?(GridPoint.new(x-1, y))).to eq true
     end
   end
 end

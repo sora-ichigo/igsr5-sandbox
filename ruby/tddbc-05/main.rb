@@ -15,4 +15,8 @@ class GridPoint
   def same_coordinates_with?(grid_point)
     self.x == grid_point.x && self.y == grid_point.y
   end
+
+  def neighbor_of?(grid_point)
+
+  end
 end
