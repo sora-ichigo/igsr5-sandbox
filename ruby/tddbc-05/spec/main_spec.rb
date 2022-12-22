@@ -1,8 +1,14 @@
 require_relative "../main.rb"
 
-describe "Main" do
-  it "should return '(4,7)'" do
-    p4_7 = GridPoint.new(4, 7)
-    expect(p4_7).to be_nil
+describe "GridPoint" do
+  let(:x) { 4 }
+  let(:y) { u }
+  let(:obj) { GridPoint.new(x, y) }
+
+  describe "#x" do
+    it { expect(obj.x).to eq x }
+  end
+  describe "#y" do
+    it { expect(obj.y).to eq y }
   end
 end
