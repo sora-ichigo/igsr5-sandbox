@@ -38,4 +38,8 @@ class GridPointSet
       is_contain || grid_point.same_coordinates_with?(target_grid_point)
     end
   end
+
+  def connected
+
+  end
 end

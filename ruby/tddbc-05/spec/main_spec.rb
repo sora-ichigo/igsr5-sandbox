@@ -74,4 +74,15 @@ describe "GridPointSet" do
       end
     end
   end
+
+  # 隣り合う条件 (x-1,y),(x+1,y),(x,y-1),(x,y+1)
+  describe "#connected?" do
+    context "when (x-1,y) pattern" do
+      let(:grid_point1) { GridPoint.new(1, 2) }
+      let(:grid_point2) { GridPoint.new(0, 2) }
+      it "should return true" do
+        expect(grid_point_set.connected?).to eq true
+      end
+    end
+  end
 end
