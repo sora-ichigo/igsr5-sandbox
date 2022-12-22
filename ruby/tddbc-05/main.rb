@@ -39,7 +39,7 @@ class GridPointSet
     end
   end
 
-  def connected
+  def connected?
 
   end
 end
