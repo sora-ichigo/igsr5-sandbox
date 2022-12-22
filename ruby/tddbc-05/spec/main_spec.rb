@@ -84,5 +84,26 @@ describe "GridPointSet" do
         expect(grid_point_set.connected?).to eq true
       end
     end
+    context "when (x+1,y) pattern" do
+      let(:grid_point1) { GridPoint.new(1, 2) }
+      let(:grid_point2) { GridPoint.new(2, 2) }
+      it "should return true" do
+        expect(grid_point_set.connected?).to eq true
+      end
+    end
+    context "when (x,y-1) pattern" do
+      let(:grid_point1) { GridPoint.new(1, 2) }
+      let(:grid_point2) { GridPoint.new(1, 1) }
+      it "should return true" do
+        expect(grid_point_set.connected?).to eq true
+      end
+    end
+    context "when (x,y+1) pattern" do
+      let(:grid_point1) { GridPoint.new(1, 2) }
+      let(:grid_point2) { GridPoint.new(1, 3) }
+      it "should return true" do
+        expect(grid_point_set.connected?).to eq true
+      end
+    end
   end
 end

@@ -28,6 +28,9 @@ end
 
 class GridPointSet
   attr_accessor :grid_points
+
+  # @param [GridPoint] grid_point1
+  # @param [GridPoint] grid_point2
   def initialize(grid_point1, grid_point2)
     @grid_points = [grid_point1, grid_point2]
   end
