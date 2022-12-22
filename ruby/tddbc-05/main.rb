@@ -31,4 +31,9 @@ class GridPointSet
   def initialize(grid_point1, grid_point2)
     @grid_points = [grid_point1, grid_point2]
   end
+
+  # @param [GridPoint] grid_point
+  def contain?(grid_point)
+    self.grid_points[0].same_coordinates_with?(grid_point) || self.grid_points[1].same_coordinates_with?(grid_point)
+  end
 end
