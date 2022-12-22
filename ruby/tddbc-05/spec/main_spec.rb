@@ -2,7 +2,7 @@ require_relative "../main.rb"
 
 describe "GridPoint" do
   let(:x) { 4 }
-  let(:y) { u }
+  let(:y) { 7 }
   let(:obj) { GridPoint.new(x, y) }
 
   describe "#x" do
