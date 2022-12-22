@@ -7,4 +7,8 @@ class GridPoint
     @x = x
     @y = y
   end
+
+  def notation
+
+  end
 end
