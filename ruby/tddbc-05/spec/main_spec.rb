@@ -151,7 +151,7 @@ describe "GridPointSet" do
         let(:grid_point3) { GridPoint.new(3, 2) }
 
         it "should return true" do
-          expect(grid_point_set).to eq true
+          expect(grid_point_set.connected?).to eq true
         end
       end
     end
