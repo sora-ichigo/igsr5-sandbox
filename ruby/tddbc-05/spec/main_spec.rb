@@ -146,12 +146,34 @@ describe "GridPointSet" do
     # その格子点集合が連結しているものとします
     describe "#connected?" do
       context "when grid_point_set is connected" do
-        let(:grid_point1) { GridPoint.new(1, 2) }
-        let(:grid_point2) { GridPoint.new(2, 2) }
-        let(:grid_point3) { GridPoint.new(3, 2) }
+        context "ver1" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(2, 2) }
+          let(:grid_point3) { GridPoint.new(3, 2) }
 
-        it "should return true" do
-          expect(grid_point_set.connected?).to eq true
+          it "should return true" do
+            expect(grid_point_set.connected?).to eq true
+          end
+        end
+
+        context "ver1" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(1, 3) }
+          let(:grid_point3) { GridPoint.new(1, 2) }
+
+          it "should return true" do
+            expect(grid_point_set.connected?).to eq true
+          end
+        end
+
+        context "ver3" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(1, 3) }
+          let(:grid_point3) { GridPoint.new(2, 3) }
+
+          it "should return true" do
+            expect(grid_point_set.connected?).to eq true
+          end
         end
       end
 
