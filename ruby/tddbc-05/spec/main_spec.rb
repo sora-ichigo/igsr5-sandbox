@@ -156,12 +156,34 @@ describe "GridPointSet" do
       end
 
       context "when grid_point_set is not connected" do
-        let(:grid_point1) { GridPoint.new(1, 2) }
-        let(:grid_point2) { GridPoint.new(2, 2) }
-        let(:grid_point3) { GridPoint.new(4, 2) }
+        context "ver1" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(2, 2) }
+          let(:grid_point3) { GridPoint.new(4, 2) }
 
-        it "should return true" do
-          expect(grid_point_set.connected?).to eq false
+          it "should return false" do
+            expect(grid_point_set.connected?).to eq false
+          end
+        end
+
+        context "ver2" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(3, 2) }
+          let(:grid_point3) { GridPoint.new(4, 2) }
+
+          it "should return false" do
+            expect(grid_point_set.connected?).to eq false
+          end
+        end
+
+        context "ver3" do
+          let(:grid_point1) { GridPoint.new(1, 2) }
+          let(:grid_point2) { GridPoint.new(1, 3) }
+          let(:grid_point3) { GridPoint.new(4, 2) }
+
+          it "should return false" do
+            expect(grid_point_set.connected?).to eq false
+          end
         end
       end
     end
