@@ -121,6 +121,10 @@ describe "GridPointSet" do
     let(:grid_point1) { GridPoint.new(1, 2) }
     let(:grid_point2) { GridPoint.new(3, 6) }
     let(:grid_point3) { GridPoint.new(9, 18) }
-    let!(:grid_point_set) { GridPointSet.new(grid_point1, grid_point2, grid_point3) }
+    let(:grid_point_set) { GridPointSet.new(grid_point1, grid_point2, grid_point3) }
+
+    it do
+      expect(grid_point_set.grid_points).to eq [grid_point1, grid_point2, grid_point3]
+    end
   end
 end
