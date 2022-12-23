@@ -209,5 +209,11 @@ describe "GridPointSet" do
         end
       end
     end
+
+    describe "#count" do
+      it "should return grid_points count" do
+        expect(grid_point_set.count).to eq 3
+      end
+    end
   end
 end

@@ -49,4 +49,8 @@ class GridPointSet
 
     connected
   end
+
+  def count
+    self.grid_points.count
+  end
 end
