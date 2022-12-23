@@ -139,5 +139,21 @@ describe "GridPointSet" do
         end
       end
     end
+
+    # 格子点集合に含まれる任意の格子点について、
+    # その格子点から隣り合っている格子点のみを経由して
+    # その他全ての格子点へ到達できる場合に限り、
+    # その格子点集合が連結しているものとします
+    describe "#connected?" do
+      context "when grid_point_set is connected" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(2, 2) }
+        let(:grid_point3) { GridPoint.new(3, 2) }
+
+        it "should return true" do
+          expect(grid_point_set).to eq true
+        end
+      end
+    end
   end
 end
