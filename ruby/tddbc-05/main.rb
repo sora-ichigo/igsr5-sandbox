@@ -42,9 +42,9 @@ class GridPointSet
   end
 
   def connected?
-    connected = false
+    connected = true
     self.grid_points.each_cons(2) do |grid_points|
-      connected = connected || grid_points[0].neighbor_of?(grid_points[1])
+      connected = connected && grid_points[0].neighbor_of?(grid_points[1])
     end
 
     connected
