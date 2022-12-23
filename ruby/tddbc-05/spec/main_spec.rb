@@ -54,64 +54,73 @@ describe "GridPoint" do
 end
 
 describe "GridPointSet" do
-  let(:grid_point1) { GridPoint.new(1, 2) }
-  let(:grid_point2) { GridPoint.new(3, 6) }
-  let(:grid_point_set) { GridPointSet.new(grid_point1, grid_point2) }
+  context "when grid_point_set has two grid_points" do
+    let(:grid_point1) { GridPoint.new(1, 2) }
+    let(:grid_point2) { GridPoint.new(3, 6) }
+    let(:grid_point_set) { GridPointSet.new(grid_point1, grid_point2) }
 
-  it do
-    expect(grid_point_set.grid_points).to eq [grid_point1, grid_point2]
+    it do
+      expect(grid_point_set.grid_points).to eq [grid_point1, grid_point2]
+    end
+
+    describe "#contain?" do
+      context "when contains given grid_points contain" do
+        it "should return true" do
+          expect(grid_point_set.contain?(grid_point1)).to eq true
+        end
+      end
+      context "when doesn't contains given grid_points contain" do
+        it "should return false" do
+          expect(grid_point_set.contain?(GridPoint.new(10, 20))).to eq false
+        end
+      end
+    end
+
+    # 隣り合う条件 (x-1,y),(x+1,y),(x,y-1),(x,y+1)
+    describe "#connected?" do
+      subject { grid_point_set.connected? }
+      context "when (x-1,y) pattern" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(0, 2) }
+        it "should return true" do
+          is_expected.to eq true
+        end
+      end
+      context "when (x+1,y) pattern" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(2, 2) }
+        it "should return true" do
+          is_expected.to eq true
+        end
+      end
+      context "when (x,y-1) pattern" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(1, 1) }
+        it "should return true" do
+          is_expected.to eq true
+        end
+      end
+      context "when (x,y+1) pattern" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(1, 3) }
+        it "should return true" do
+          is_expected.to eq true
+        end
+      end
+      context "when grid_points doesn't connect" do
+        let(:grid_point1) { GridPoint.new(1, 2) }
+        let(:grid_point2) { GridPoint.new(10, 20) }
+        it "should return false" do
+          is_expected.to eq false
+        end
+      end
+    end
   end
 
-  describe "#contain?" do
-    context "when contains given grid_points contain" do
-      it "should return true" do
-        expect(grid_point_set.contain?(grid_point1)).to eq true
-      end
-    end
-    context "when doesn't contains given grid_points contain" do
-      it "should return false" do
-        expect(grid_point_set.contain?(GridPoint.new(10, 20))).to eq false
-      end
-    end
-  end
-
-  # 隣り合う条件 (x-1,y),(x+1,y),(x,y-1),(x,y+1)
-  describe "#connected?" do
-    subject { grid_point_set.connected? }
-    context "when (x-1,y) pattern" do
-      let(:grid_point1) { GridPoint.new(1, 2) }
-      let(:grid_point2) { GridPoint.new(0, 2) }
-      it "should return true" do
-        is_expected.to eq true
-      end
-    end
-    context "when (x+1,y) pattern" do
-      let(:grid_point1) { GridPoint.new(1, 2) }
-      let(:grid_point2) { GridPoint.new(2, 2) }
-      it "should return true" do
-        is_expected.to eq true
-      end
-    end
-    context "when (x,y-1) pattern" do
-      let(:grid_point1) { GridPoint.new(1, 2) }
-      let(:grid_point2) { GridPoint.new(1, 1) }
-      it "should return true" do
-        is_expected.to eq true
-      end
-    end
-    context "when (x,y+1) pattern" do
-      let(:grid_point1) { GridPoint.new(1, 2) }
-      let(:grid_point2) { GridPoint.new(1, 3) }
-      it "should return true" do
-        is_expected.to eq true
-      end
-    end
-    context "when grid_points doesn't connect" do
-      let(:grid_point1) { GridPoint.new(1, 2) }
-      let(:grid_point2) { GridPoint.new(10, 20) }
-      it "should return false" do
-        is_expected.to eq false
-      end
-    end
+  context "when grid_point_set has two grid_points" do
+    let(:grid_point1) { GridPoint.new(1, 2) }
+    let(:grid_point2) { GridPoint.new(3, 6) }
+    let(:grid_point3) { GridPoint.new(9, 18) }
+    let!(:grid_point_set) { GridPointSet.new(grid_point1, grid_point2, grid_point3) }
   end
 end
