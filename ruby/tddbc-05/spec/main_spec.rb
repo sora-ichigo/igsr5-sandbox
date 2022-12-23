@@ -126,5 +126,18 @@ describe "GridPointSet" do
     it do
       expect(grid_point_set.grid_points).to eq [grid_point1, grid_point2, grid_point3]
     end
+
+    describe "#contain?" do
+      context "when contains given grid_points contain" do
+        it "should return true" do
+          expect(grid_point_set.contain?(grid_point3)).to eq true
+        end
+      end
+      context "when doesn't contains given grid_points contain" do
+        it "should return false" do
+          expect(grid_point_set.contain?(GridPoint.new(10, 20))).to eq false
+        end
+      end
+    end
   end
 end
