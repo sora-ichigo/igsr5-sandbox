@@ -300,5 +300,8 @@ describe "GridPointSet" do
         expect(grid_point_set.count).to eq 4
       end
     end
+
+    describe "#traversable?" do
+    end
   end
 end

@@ -53,4 +53,8 @@ class GridPointSet
   def count
     self.grid_points.count
   end
+
+  def traversable?
+
+  end
 end
