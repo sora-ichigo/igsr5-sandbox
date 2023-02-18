@@ -1,0 +1,26 @@
+  PID TTY           TIME CMD
+87519 ttys000    0:00.14 -zsh
+ 2921 ttys001    0:01.34 -zsh
+11377 ttys002    0:00.06 -zsh
+11514 ttys002    0:00.02 tmux a
+44016 ttys003    0:02.32 nvim
+57994 ttys003    0:00.45 -zsh
+12064 ttys004    0:00.07 -zsh
+45862 ttys005    0:00.12 /bin/zsh
+66461 ttys006    0:00.21 /bin/zsh
+63043 ttys007    0:00.93 -zsh
+79022 ttys009    0:00.07 /bin/zsh
+30747 ttys010    0:00.24 -zsh
+48755 ttys010    0:00.43 nvim
+74325 ttys011    0:00.83 -zsh
+81959 ttys012    0:00.06 /bin/zsh
+ 5068 ttys013    0:02.65 nvim
+11540 ttys013    0:00.46 -zsh
+ 5071 ttys014    0:01.55 /bin/zsh
+ 6786 ttys015    0:00.64 -zsh
+20790 ttys015    0:00.04 nvim
+91577 ttys015    0:00.91 spring server | wantedly | started 541 hours ago   
+37306 ttys016    0:00.07 nvim
+48955 ttys016    0:00.39 -zsh
+45092 ttys020    1:32.80 docker pull mcr.microsoft.com/vscode/devcontainers/ruby:0-3.0
+45095 ttys020    1:46.47 /usr/local/bin/com.docker.cli pull mcr.microsoft.com/vscode/devcontainers/ruby:0-3.0
