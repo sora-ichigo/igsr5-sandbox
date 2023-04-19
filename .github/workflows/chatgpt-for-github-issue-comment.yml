@@ -1,0 +1,25 @@
+name: ChatGPT Response on Issue Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: pip install openai pyGithub
+
+      - name: Generate response and comment on issue
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/generate_chatgpt_reply_from_issue_comment.py
