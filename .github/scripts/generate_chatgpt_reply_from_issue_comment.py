@@ -19,18 +19,20 @@ comment_body = event_payload["comment"]["body"]
 # Check if @gptalk is mentioned in the comment
 if "@gptalk" in comment_body:
     # Generate a response using the OpenAI API
-    prompt = f"{comment_body.replace('@gptalk', '')}"
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=100,
-        n=1,
-        stop=None,
-        temperature=0.5,
+    msg = f"{comment_body.replace('@gptalk', '')}"
+    msgs = [
+        {
+        "role": "user",
+        "content": msg
+        }
+    ]
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=msgs
     )
 
     # Get the response text
-    response_text = response.choices[0].text.strip()
+    response_text = response.choices[0].message.content
 
     # Get the repository and issue from the event payload
     repo = g.get_repo(event_payload["repository"]["full_name"])
