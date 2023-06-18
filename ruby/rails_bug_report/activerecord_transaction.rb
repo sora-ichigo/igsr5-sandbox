@@ -22,28 +22,54 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 ActiveRecord::Schema.define do
   create_table :posts, force: true do |t|
-  end
-
-  create_table :comments, force: true do |t|
-    t.integer :post_id
+    t.string :column_1
+    t.string :column_2
   end
 end
 
 class Post < ActiveRecord::Base
-  has_many :comments
-end
-
-class Comment < ActiveRecord::Base
-  belongs_to :post
+  attr_accessor :column_1_changed, :column_2_changed
 end
 
 class BugTest < Minitest::Test
-  def test_association_stuff
+  def test_has_previously_changes
     post = Post.create!
-    post.comments << Comment.create!
 
-    assert_equal 1, post.comments.count
-    assert_equal 1, Comment.count
-    assert_equal post.id, Comment.first.post.id
+    post.update(column_1: "first changed", column_2: "second changed")
+    column_1_changed = post.column_1_previously_changed?
+    column_2_changed = post.column_2_previously_changed?
+    assert_equal(
+      {column_1_changed: true, column_2_changed: true},
+      {column_1_changed: column_1_changed, column_2_changed: column_2_changed}
+    )
+  end
+
+  def test_has_only_last_previously_change
+    post = Post.create!
+
+    post.update(column_1: "first changed")
+    post.update(column_2: "first changed")
+    column_1_changed = post.column_1_previously_changed?
+    column_2_changed = post.column_2_previously_changed?
+    assert_equal(
+      {column_1_changed: false, column_2_changed: true},
+      {column_1_changed: column_1_changed, column_2_changed: column_2_changed}
+    )
+  end
+
+  def test_has_only_last_saved_previously_change_in_transaction
+    post = Post.create!
+
+    ActiveRecord::Base.transaction do
+      post.update(column_1: "first changed")
+      post.update(column_2: "first changed")
+    end
+
+    column_1_changed = post.column_1_previously_changed?
+    column_2_changed = post.column_2_previously_changed?
+    assert_equal(
+      {column_1_changed: false, column_2_changed: true},
+      {column_1_changed: column_1_changed, column_2_changed: column_2_changed}
+    )
   end
 end
