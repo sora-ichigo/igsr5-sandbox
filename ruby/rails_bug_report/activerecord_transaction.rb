@@ -29,6 +29,10 @@ end
 
 class Post < ActiveRecord::Base
   attr_accessor :column_1_changed, :column_2_changed
+
+  after_commit do
+    binding.irb
+  end
 end
 
 class BugTest < Minitest::Test
