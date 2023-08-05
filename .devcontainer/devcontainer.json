@@ -1,0 +1,6 @@
+{
+  "name": "codespace",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+}
