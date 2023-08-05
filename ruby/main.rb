@@ -21,4 +21,3 @@ def print_c
     puts i*3
   end
 end
-
