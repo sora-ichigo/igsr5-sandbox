@@ -15,12 +15,23 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #-----------------------------------------------
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-        tmux neovim bat fzf ripgrep
+        tmux neovim fzf ripgrep
 
 #  Clean up apt-get cache
 #-----------------------------------------------
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+#  Install DB (postgresql)
+#-----------------------------------------------
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && apt-get update \
+    && apt-get -y install postgresql-13 \
+    && service postgresql start \
+    && su postgres -c "psql --command \"CREATE ROLE vscode LOGIN SUPERUSER\"" \
+    && sed -i 's/md5/trust/g'  /etc/postgresql/13/main/pg_hba.conf \
+    && sed -i 's/peer/trust/g'  /etc/postgresql/13/main/pg_hba.conf
 
 ##  Perform as vscode user
 ##-----------------------------------------------

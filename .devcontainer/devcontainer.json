@@ -8,6 +8,12 @@
     "memory": "8gb",
     "storage": "32gb"
   },
+  "features": {
+    // https://docs.github.com/en/codespaces/developing-in-codespaces/using-github-codespaces-with-github-cli#ssh-into-a-codespace
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
   "customizations": {
     // Configure properties specific to VS Code.
     "vscode": {
@@ -41,6 +47,7 @@
       ]
     },
     "settings": {
+      "files.trimTrailingWhitespace": true
     }
   }
 }
