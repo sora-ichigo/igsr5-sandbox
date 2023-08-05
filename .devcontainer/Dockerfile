@@ -38,6 +38,15 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg ma
 USER vscode
 ENV USER_HOME /home/vscode
 
+#  Set functions.bash
+#-----------------------------------------------
+COPY bash/functions.bash $USER_HOME/bash/functions.bash
+RUN echo 'source $HOME/bash/functions.bash' >> $USER_HOME/.bashrc
+
+#  Set .bash_history
+#-----------------------------------------------
+COPY bash/.bash_history $USER_HOME/.bash_history
+
 #  Set PS1
 #-----------------------------------------------
 COPY bash/prompt.bash $USER_HOME/bash/prompt.bash
