@@ -38,6 +38,12 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg ma
 USER vscode
 ENV USER_HOME /home/vscode
 
+#  Set alias.bash
+#-----------------------------------------------
+COPY bash/functions.bash $USER_HOME/bash/alias.bash
+RUN echo 'source $HOME/bash/alias.bash' >> $USER_HOME/.bashrc
+
+
 #  Set functions.bash
 #-----------------------------------------------
 COPY bash/functions.bash $USER_HOME/bash/functions.bash
