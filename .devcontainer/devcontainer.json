@@ -10,6 +10,7 @@
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
     },
-    "ghcr.io/igsr5/devcontainer/ruby:latest": {}
+    "ghcr.io/igsr5/devcontainer/ruby:latest": {},
+    "ghcr.io/igsr5/devcontainer/common-tools:latest": {}
   }
 }
