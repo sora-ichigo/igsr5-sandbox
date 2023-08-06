@@ -1,8 +1,6 @@
 {
-  "name": "codespace",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "name": "dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "hostRequirements": {
     "cpus": 8,
     "memory": "8gb",
@@ -12,43 +10,21 @@
     // https://docs.github.com/en/codespaces/developing-in-codespaces/using-github-codespaces-with-github-cli#ssh-into-a-codespace
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
-    }
+    },
+    "ghcr.io/devcontainers/features/ruby:1": {
+      "version": "3.1.4"
+    },
+    "https://github.com/igsr5/devcontainer/releases/devcontainer-feature-common-tools.tgz": {}
   },
   "customizations": {
-    // Configure properties specific to VS Code.
-    "vscode": {
-      // Add the IDs of extensions you want installed when the container is created.
-      "extensions": [
-        // For ruby development
-        "rebornix.Ruby",
-        "kaiwood.endwise",
-
-        // For golang development
-        "golang.go",
-
-        // For frontend development
-        "GraphQL.vscode-graphql-syntax",
-        "esbenp.prettier-vscode",
-        "figma.figma-vscode-extension",
-        "crystal-spider.jsdoc-generator", // command + shift + p -> generate jsdoc. added by @igsr5
-
-        // For dx development
-        "github.vscode-github-actions",
-
-        // For general development
-        "github.copilot",
-        "gitHub.copilot-chat",
-        "streetsidesoftware.code-spell-checker",
-        "ms-vsliveshare.vsliveshare",
-        "formulahendry.auto-close-tag",
-        "eamodio.gitlens", // ファイル選択行の git history を表示 added by @igsr5
-        "alefragnani.Bookmarks", // 任意の行をブックマークしていつでもジャンプできるようになる added by @igsr5
-        "zhang-renyang.chat-gpt" // vscode 上で ChatGPT が使えるようになる added by @igsr5
-      ]
-    },
-    "settings": {
-      "files.insertFinalNewline": true,
-      "files.trimTrailingWhitespace": true
+    "codespaces": {
+      "repositories": {
+        "igsr5/devcontainer": {
+          "permissions": {
+            "contents": "read"
+          }
+        }
+      }
     }
   }
 }
