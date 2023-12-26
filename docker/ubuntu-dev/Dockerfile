@@ -5,8 +5,10 @@ RUN apt-get update && apt-get install -y \
   tmux \
   fzf \
   sudo \
-  gcc
+  gcc \
+  man-db
 
+RUN yes | unminimize
 
 RUN useradd -m dev && echo "dev:dev" | chpasswd && adduser dev sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
