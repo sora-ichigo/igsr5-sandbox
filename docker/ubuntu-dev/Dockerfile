@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
   fzf \
   sudo \
   gcc \
-  man-db
+  man-db \
+  strace
 
 RUN yes | unminimize
 
