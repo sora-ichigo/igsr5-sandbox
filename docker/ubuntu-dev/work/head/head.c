@@ -5,10 +5,23 @@ static void do_head(FILE *f, long n);
 
 int main(int argc, char **argv)
 {
-  if (argc < 2)
+  if (argc > 2)
   {
-    perror("Usage: head FILE");
+    fprintf(stderr, "Usage: %s n [file file...]\n", argv[0]);
     exit(1);
+  }
+
+  if (argc == 2)
+  {
+    FILE *f;
+    f = fopen(argv[1], "r");
+    if (!f)
+    {
+      perror(argv[1]);
+      exit(1);
+    }
+
+    do_head(f, 10);
   }
 
   long n;
