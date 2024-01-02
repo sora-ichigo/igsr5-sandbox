@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
   sudo \
   gcc \
   man-db \
-  strace
+  strace \
+  gdb
 
 RUN yes | unminimize
 
