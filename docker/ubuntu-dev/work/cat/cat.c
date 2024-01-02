@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
   if (argc < 2)
   {
     do_cat_without_path();
-  }
+  };
 
   int i;
   for (i = 1; i < argc; i++)

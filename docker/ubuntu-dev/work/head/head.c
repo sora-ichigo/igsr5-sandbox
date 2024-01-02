@@ -81,3 +81,43 @@ static void do_head(FILE *f, long n)
     }
   }
 }
+
+static void do_tail(FILE *f, long n)
+{
+  if (n <= 0)
+  {
+    return;
+  }
+
+  int c;
+  long count = 0;
+  long pos = ftell(f);
+  fseek(f, 0, SEEK_END);
+  long end_pos = ftell(f);
+
+  while (count < n && pos >= 0)
+  {
+    fseek(f, pos, SEEK_SET);
+    c = getc(f);
+    if (c == '\n')
+    {
+      count++;
+    }
+    pos--;
+  }
+
+  if (pos < 0)
+  {
+    fseek(f, 0, SEEK_SET);
+  }
+  else
+  {
+    fseek(f, pos + 2, SEEK_SET);
+  }
+
+  while ((c = getc(f)) != EOF)
+  {
+    if (putchar(c) < 0)
+      exit(1);
+  }
+}
