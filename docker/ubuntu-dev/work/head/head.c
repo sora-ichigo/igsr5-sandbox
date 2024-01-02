@@ -22,6 +22,11 @@ int main(int argc, char **argv)
     }
 
     do_head(f, 10);
+    if (fclose(f) < 0)
+    {
+      perror(argv[1]);
+      exit(1);
+    }
   }
 
   long n;
