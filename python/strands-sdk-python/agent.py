@@ -1,4 +1,5 @@
 from strands import Agent
+# https://github.com/strands-agents/tools/blob/8341c1126b36f61fc33c0ac4e0ccabe6495a3119/src/strands_tools/calculator.py#L590
 from strands_tools import calculator
 from strands.models.bedrock import BedrockModel
 
