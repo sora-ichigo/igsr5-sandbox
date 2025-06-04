@@ -7,7 +7,6 @@ bedrock_model = BedrockModel(
     region_name='ap-northeast-1',
 )
 
-
 agent = Agent(tools=[calculator], model=bedrock_model)
 print(agent.model.config)
 

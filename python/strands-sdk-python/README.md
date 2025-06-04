@@ -37,6 +37,9 @@ aws sso login --profile AdministratorAccess-247679429177
 
 # 環境変数の設定
 export AWS_PROFILE=AdministratorAccess-247679429177
+
+# リージョンの設定
+export AWS_REGION=ap-northeast-1
 ```
 
 #### 認証確認
