@@ -1,12 +1,12 @@
 #include "math.h"
-#include <stdio.h>
+#include "util.h"
 
 int main(void) {
   int a = add(3, 4);
   int b = mul(2, 5);
 
-  printf("a = %d\n", a);
-  printf("b = %d\n", b);
+  print_result("a", a);
+  print_result("b", b);
 
   return 0;
 }
