@@ -1,0 +1,8 @@
+# ビルド成果物
+build/
+
+# キャッシュ
+.cache/
+
+# コンパイルデータベース
+compile_commands.json
