@@ -8,3 +8,5 @@
 **/*.out
 **/a.out
 c/myproj/myapp
+c/pipe_test
+c/dup_test
