@@ -18,3 +18,4 @@ c/suspend_demo
 c/environ_demo
 c/set_uid_demo
 c/getrusage_demo
+c/time_demo
