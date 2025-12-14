@@ -19,3 +19,4 @@ c/environ_demo
 c/set_uid_demo
 c/getrusage_demo
 c/time_demo
+c/socket_client_demo
