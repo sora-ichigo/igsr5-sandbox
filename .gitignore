@@ -15,3 +15,4 @@ c/mask_pending_demo
 c/sigaction_basic
 c/signal_ctrlc
 c/suspend_demo
+c/environ_demo
