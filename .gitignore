@@ -10,3 +10,8 @@
 c/myproj/myapp
 c/pipe_test
 c/dup_test
+c/custom_cwd
+c/mask_pending_demo
+c/sigaction_basic
+c/signal_ctrlc
+c/suspend_demo
