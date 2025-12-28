@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/tmc/langchaingo/llms"
+	"github.com/tmc/langchaingo/chains"
 	"github.com/tmc/langchaingo/llms/googleai"
 	"github.com/tmc/langchaingo/memory"
 )
@@ -23,6 +23,7 @@ func main() {
 	}
 
 	chatMemory := memory.NewConversationBuffer()
+	conversationChain := chains.NewConversation(llm, chatMemory)
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("Chat Application Started (type 'quit' to exit)")
@@ -37,23 +38,12 @@ func main() {
 			break
 		}
 
-		messages, _ := chatMemory.ChatHistory.Messages(ctx)
-
-		var conversation string
-		for _, msg := range messages {
-			conversation += msg.GetContent() + "\n"
-		}
-
-		fullPrompt := conversation + "Human: " + input + "\nAssistant: "
-
-		response, err := llms.GenerateFromSinglePrompt(ctx, llm, fullPrompt)
+		result, err := chains.Run(ctx, conversationChain, input)
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
+			continue
 		}
 
-		chatMemory.ChatHistory.AddUserMessage(ctx, input)
-		chatMemory.ChatHistory.AddAIMessage(ctx, response)
-
-		fmt.Printf("AI: %s\n\n", response)
+		fmt.Printf("AI: %s\n\n", result)
 	}
 }
