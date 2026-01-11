@@ -7,91 +7,64 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum { TAIL_N = 5, CHUNK = 1024 };
+#define CHUNK_SIZE 1024
+#define TAIL_N 5
 
-static char *read_line(FILE *f) {
-  char buf[CHUNK];
-
-  char *line = NULL;
-  size_t cap = 0;
-  size_t len = 0;
-
-  while (fgets(buf, sizeof(buf), f) != NULL) {
-    size_t blen = strlen(buf);
-    size_t new_cap = cap ? cap * 2 : 128;
-    while (new_cap < len + blen + 1)
-      new_cap *= 2;
-    char *p = realloc(line, new_cap);
-    if (!p) {
-      free(line);
-      perror("realloc");
-      exit(EXIT_FAILURE);
-    }
-    line = p;
-    cap = new_cap;
-
-    memcpy(line + len, buf, blen);
-    len += blen;
-    line[len] = '\0';
-
-    if (blen > 0 && buf[blen - 1] == '\n') {
-      return line; // 行末まで読めた
-    }
-    // 改行が来ていない = 長い行なので続けて読む
-  }
-
-  if (ferror(f)) {
-    perror("fgets");
-    free(line);
+static FILE *xfopen(const char *filename, const char *mode) {
+  FILE *f = fopen(filename, mode);
+  if (!f) {
+    perror("fopen");
     exit(EXIT_FAILURE);
   }
+  return f;
+}
 
-  // EOF
-  if (len == 0) {
-    free(line);
-    return NULL; // 何も読めていない
+static void xfclose(FILE *f) {
+  if (fclose(f) != 0) {
+    perror("fclose");
+    exit(EXIT_FAILURE);
   }
-
-  return line;
 }
 
 int main(int argc, char *argv[]) {
   for (int i = 1; i < argc; i++) {
-    FILE *f = fopen(argv[i], "rb");
-    if (!f) {
-      perror("fopen");
-      exit(EXIT_FAILURE);
-    }
+    FILE *f = xfopen(argv[i], "rb");
 
     char *ring[TAIL_N] = {0};
-    size_t count = 0;
+    int idx = 0;
+    int pos = 0;
 
     for (;;) {
-      char *line = read_line(f);
-      if (!line)
-        break;
+      char *ret;
+      char line[CHUNK_SIZE];
+      ret = fgets(line, sizeof(line), f);
+      if (ret == NULL) {
+        if (feof(f))
+          break;
+        perror("fgets");
+        exit(EXIT_FAILURE);
+      }
 
-      size_t idx = count % TAIL_N;
-      free(ring[idx]);
-      ring[idx] = line;
-      count++;
+      pos = idx % TAIL_N;
+      char *p = malloc(strlen(line) + 1);
+      if (ring[pos])
+        free(ring[pos]);
+      strcpy(p, line);
+      ring[pos] = p;
+      idx++;
     }
 
-    size_t out = (count < TAIL_N) ? count : TAIL_N;
-    size_t start = (count <= TAIL_N) ? 0 : (count % TAIL_N);
-
-    for (size_t k = 0; k < out; k++) {
-      size_t idx = (start + k) % TAIL_N;
-      fputs(ring[idx], stdout);
+    int print_pos = idx % TAIL_N;
+    for (int j = 0; j < TAIL_N; j++) {
+      if (ring[print_pos]) {
+        fputs(ring[print_pos], stdout);
+        free(ring[print_pos]);
+      }
+      print_pos = (print_pos + 1) % TAIL_N;
     }
 
-    for (int k = 0; k < TAIL_N; k++)
-      free(ring[k]);
-
-    if (fclose(f) != 0) {
-      perror("fclose");
-      exit(EXIT_FAILURE);
-    }
+    xfclose(f);
   }
+
   return EXIT_SUCCESS;
 }
