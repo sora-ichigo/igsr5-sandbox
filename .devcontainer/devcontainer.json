@@ -5,12 +5,5 @@
     "cpus": 8,
     "memory": "8gb",
     "storage": "32gb"
-  },
-  "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    },
-    "ghcr.io/igsr5/devcontainer/ruby:latest": {},
-    "ghcr.io/igsr5/devcontainer/common-tools:latest": {}
   }
 }
