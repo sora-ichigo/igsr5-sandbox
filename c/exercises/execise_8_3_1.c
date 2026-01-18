@@ -59,15 +59,15 @@ void do_grep(const char *filename, const char *pattern, bool match_icase,
       die("getline");
     }
 
-    if (!out_invert && regexec(&regex, line, 1, match, 0) == 0) {
-      fputs_or_exit(line, stdout);
-    } else if (out_invert && regexec(&regex, line, 1, match, 0) != 0) {
+    bool matched = (regexec(&regex, line, 1, match, 0) == 0);
+    if (matched != out_invert) {
       fputs_or_exit(line, stdout);
     }
 
     free(line);
   }
 
+  regfree(&regex);
   fclose_or_exit(f);
 
   return;
