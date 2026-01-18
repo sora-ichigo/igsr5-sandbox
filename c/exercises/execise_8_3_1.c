@@ -36,7 +36,8 @@ regex_t compile_regex_or_exit(const char *pattern, int cflags) {
   return regex;
 }
 
-void do_grep(const char *filename, const char *pattern, bool match_icase) {
+void do_grep(const char *filename, const char *pattern, bool match_icase,
+             bool out_invert) {
   FILE *f = fopen_or_exit(filename, "r");
 
   int cflags = REG_EXTENDED;
@@ -58,7 +59,9 @@ void do_grep(const char *filename, const char *pattern, bool match_icase) {
       die("getline");
     }
 
-    if (regexec(&regex, line, 1, match, 0) == 0) {
+    if (!out_invert && regexec(&regex, line, 1, match, 0) == 0) {
+      fputs_or_exit(line, stdout);
+    } else if (out_invert && regexec(&regex, line, 1, match, 0) != 0) {
       fputs_or_exit(line, stdout);
     }
 
@@ -95,7 +98,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  do_grep(argv[optind], argv[optind + 1], match_icase);
+  do_grep(argv[optind], argv[optind + 1], match_icase, out_invert);
 
   return EXIT_SUCCESS;
 }
