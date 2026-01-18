@@ -2,8 +2,10 @@
 // 組み合わせてつか用できるようにせよ。
 
 #include <regex.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void die(const char *msg) {
   perror(msg);
@@ -34,10 +36,14 @@ regex_t compile_regex_or_exit(const char *pattern, int cflags) {
   return regex;
 }
 
-void do_grep(const char *filename, const char *pattern) {
+void do_grep(const char *filename, const char *pattern, bool match_icase) {
   FILE *f = fopen_or_exit(filename, "r");
 
-  regex_t regex = compile_regex_or_exit(pattern, REG_EXTENDED | REG_ICASE);
+  int cflags = REG_EXTENDED;
+  if (match_icase) {
+    cflags |= REG_ICASE;
+  }
+  regex_t regex = compile_regex_or_exit(pattern, cflags);
   regmatch_t match[1];
 
   while (1) {
@@ -65,12 +71,31 @@ void do_grep(const char *filename, const char *pattern) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 3) {
+  if (argc < 3) {
     fprintf(stderr, "Usage: %s <arg1> <arg2>\n", argv[0]);
     return EXIT_FAILURE;
   }
 
-  do_grep(argv[1], argv[2]);
+  int opt;
+  bool match_icase = false;
+  bool out_invert = false;
+  while ((opt = getopt(argc, argv, "iv")) != -1) {
+    switch (opt) {
+    case 'i':
+      // -i オプションの処理（大文字小文字を区別しない）
+      match_icase = true;
+      break;
+    case 'v':
+      // -v オプションの処理（マッチしない行を表示）
+      out_invert = true;
+      break;
+    default:
+      fprintf(stderr, "Usage: %s [-i] [-v] <arg1> <arg2>\n", argv[0]);
+      return EXIT_FAILURE;
+    }
+  }
+
+  do_grep(argv[optind], argv[optind + 1], match_icase);
 
   return EXIT_SUCCESS;
 }
